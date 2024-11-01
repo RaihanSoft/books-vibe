@@ -1,11 +1,21 @@
 import { useLoaderData, useParams } from "react-router-dom"
+import { addToStoredReadList } from "../utilities/AddToDB"
 
 
 const BookDetails = () => {
     const { bookId } = useParams()
     const data = useLoaderData()
     const book = data.find(bk => bk.bookId === Number(bookId))
-    const { image,rating, bookName, author, category, review, tags,totalPages,publisher,yearOfPublishing } = book
+    const { image, rating, bookName, author, category, review, tags, totalPages, publisher, yearOfPublishing } = book
+
+    const handleRead = (bookId) => {
+        addToStoredReadList(bookId)
+    }
+    const handleWish = (bookId) => {
+        addToStoredWishList(bookId)
+
+
+    }
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 justify-items-center gap-10">
@@ -38,8 +48,8 @@ const BookDetails = () => {
 
 
                 <div className="mt-4">
-                    <button className="btn border-black">Read</button>
-                    <button className="btn text-white bg-cyan-400 ml-4 border-black">Wish List</button>
+                    <button onClick={() => handleRead(bookId)} className="btn border-black">Read</button>
+                    <button onClick={() => handleWish(bookId)} className="btn text-white bg-cyan-400 ml-4 border-black">Wish List</button>
                 </div>
             </div>
         </div>
